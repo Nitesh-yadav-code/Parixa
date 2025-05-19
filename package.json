@@ -1,0 +1,13 @@
+{
+  "name": "parixa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix Parixa-backend && npm install --prefix Parixa-frontend && npm run build --prefix Parixa-frontend",
+    "start" : "npm run start --prefix Parixa-backend "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

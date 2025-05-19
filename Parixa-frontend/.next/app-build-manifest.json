@@ -6,20 +6,25 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(student)/dashboard/question-bank/[id]/test/[setId]/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(student)/dashboard/question-bank/[id]/test/[setId]/page.js"
+      "static/chunks/app/page.js"
+    ],
+    "/(student)/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(student)/dashboard/page.js"
     ],
     "/(student)/dashboard/question-bank/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(student)/dashboard/question-bank/[id]/page.js"
     ],
-    "/(student)/dashboard/page": [
+    "/(student)/dashboard/question-bank/[id]/test/[setId]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(student)/dashboard/page.js"
+      "static/chunks/app/(student)/dashboard/question-bank/[id]/test/[setId]/page.js"
     ]
   }
 }

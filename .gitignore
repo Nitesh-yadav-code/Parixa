@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+Parixa-frontend/node_modules
+Parixa-backend/node_modules
 /.pnp
 .pnp.*
 .yarn/*

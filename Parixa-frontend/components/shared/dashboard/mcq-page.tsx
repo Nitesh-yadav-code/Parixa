@@ -5,74 +5,79 @@ import Link from "next/link";
 import { ArrowLeft, Clock, AlertCircle } from "lucide-react";
 import TestResults from "./test-results";
 
-
-interface  Question{
-    id: string
-    question: string
-    options: string[]
-    correctOption: number
-    explanation: string
+interface Question {
+  id: string;
+  question: string;
+  options: string[];
+  correctOption: number;
+  explanation: string;
 }
 
 const MCQQuestion = ({ bankId }: { bankId: string }) => {
   const [questions, setquestionBanks] = useState<Question[]>([]);
-  
-    useEffect(()=>{
-       const fetchQuestionBank = async()=>{
-        const data = await fetch('http://localhost:5001/api/mcq/questions')
-        const questionbank = await data.json();
-        setquestionBanks(questionbank)
-       }
-       fetchQuestionBank();
-    },[])
 
-    console.log(questions)
-  
+  useEffect(() => {
+    const fetchQuestionBank = async () => {
+      const data = await fetch("http://localhost:5001/api/mcq/questions");
+      const questionbank = await data.json();
+      setquestionBanks(questionbank);
+    };
+    fetchQuestionBank();
+  }, []);
+
+  console.log(questions);
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState<(number | null)[]>([]);
   const [isTestCompleted, setIsTestCompleted] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(600); // 10 minutes in seconds
   const [isTimeUp, setIsTimeUp] = useState(false);
-  console.log(timeRemaining)
+  console.log(timeRemaining);
 
-useEffect(() => {
-  setIsTimeUp(false);
-}, []);
+  useEffect(() => {
+    setIsTimeUp(false);
+  }, []);
   // Initialize selected options array with nulls
   useEffect(() => {
     setSelectedOptions(new Array(questions.length).fill(null));
   }, [questions.length]);
 
   const handleOptionSelect = (optionIndex: number) => {
-      const newSelectedOptions = [...selectedOptions]
-      newSelectedOptions[currentQuestionIndex] = optionIndex
-      setSelectedOptions(newSelectedOptions)
-    };
+    const newSelectedOptions = [...selectedOptions];
+    newSelectedOptions[currentQuestionIndex] = optionIndex;
+    setSelectedOptions(newSelectedOptions);
+  };
 
-    const handlePreviousQuestion = ()=>{
-        if(currentQuestionIndex > 0){
-            setCurrentQuestionIndex(currentQuestionIndex - 1)
-        }
+  const handlePreviousQuestion = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
     }
-    const handleNextQuestion = ()=>{
-        if(currentQuestionIndex < questions.length -1){
-            setCurrentQuestionIndex(currentQuestionIndex +1)
-        }
+  };
+  const handleNextQuestion = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
-    const handleSubmitTest = ()=>{
-        setIsTestCompleted(true)
-    }
+  };
+  const handleSubmitTest = () => {
+    setIsTestCompleted(true);
+  };
 
   const currentQuestion = questions[currentQuestionIndex];
 
-   // Calculate if all questions are answered
-  const allQuestionsAnswered = selectedOptions.every((option) => option !== null)
+  // Calculate if all questions are answered
+  const allQuestionsAnswered = selectedOptions.every(
+    (option) => option !== null
+  );
 
-  if(isTestCompleted){
-      return(
-        <TestResults questions={questions} selectedOptions={selectedOptions} bankId={bankId} isTimeUp = {isTimeUp} />
-
-    )
+  if (isTestCompleted) {
+    return (
+      <TestResults
+        questions={questions}
+        selectedOptions={selectedOptions}
+        bankId={bankId}
+        isTimeUp={isTimeUp}
+      />
+    );
   }
 
   return (
@@ -125,46 +130,51 @@ useEffect(() => {
 
           {/* Question card */}
           <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6 mb-6">
-            <div className="mb-6">
-              <h2 className="text-lg font-medium text-gray-900 mb-2">
-                Question {currentQuestionIndex + 1}
-              </h2>
-              {/* <p className="text-gray-800">{currentQuestion.question}</p> */}
-            </div>
-
-           {currentQuestion && Array.isArray(currentQuestion.options) ? (
-              <div className="space-y-3">
-                {currentQuestion.options.map((option:string, index:number) => (
-                  <button
-                    key={index}
-                    className={`w-full cursor-pointer text-left p-4 rounded-lg border transition-all ${
-                      selectedOptions[currentQuestionIndex] === index
-                        ? "border-purple-500 bg-purple-50"
-                        : "border-gray-200 hover:border-purple-200 hover:bg-purple-50/50"
-                    }`}
-                    onClick={() => handleOptionSelect(index)}
-                  >
-                    <div className="flex items-start">
-                      <div
-                        className={`flex-shrink-0 h-5 w-5 rounded-full border flex items-center justify-center mr-3 mt-0.5 ${
-                          selectedOptions[currentQuestionIndex] === index
-                            ? "border-purple-500 bg-purple-500"
-                            : "border-gray-300"
-                        }`}
-                      >
-                        {selectedOptions[currentQuestionIndex] === index && (
-                          <div className="h-2 w-2 rounded-full bg-white"></div>
-                        )}
-                      </div>
-                      <span>{option}</span>
-                    </div>
-                  </button>
-                ))}
+            {currentQuestion ? (
+              <div className="mb-6">
+                <h2 className="text-lg font-medium text-gray-900 mb-2">
+                  Question {currentQuestionIndex + 1}
+                </h2>
+                <p className="text-gray-800">{currentQuestion.question}</p>
               </div>
             ) : (
               <div>No question available.</div>
             )}
 
+            {currentQuestion && Array.isArray(currentQuestion.options) ? (
+              <div className="space-y-3">
+                {currentQuestion.options.map(
+                  (option: string, index: number) => (
+                    <button
+                      key={index}
+                      className={`w-full cursor-pointer text-left p-4 rounded-lg border transition-all ${
+                        selectedOptions[currentQuestionIndex] === index
+                          ? "border-purple-500 bg-purple-50"
+                          : "border-gray-200 hover:border-purple-200 hover:bg-purple-50/50"
+                      }`}
+                      onClick={() => handleOptionSelect(index)}
+                    >
+                      <div className="flex items-start">
+                        <div
+                          className={`flex-shrink-0 h-5 w-5 rounded-full border flex items-center justify-center mr-3 mt-0.5 ${
+                            selectedOptions[currentQuestionIndex] === index
+                              ? "border-purple-500 bg-purple-500"
+                              : "border-gray-300"
+                          }`}
+                        >
+                          {selectedOptions[currentQuestionIndex] === index && (
+                            <div className="h-2 w-2 rounded-full bg-white"></div>
+                          )}
+                        </div>
+                        <span>{option}</span>
+                      </div>
+                    </button>
+                  )
+                )}
+              </div>
+            ) : (
+              <div>No question available.</div>
+            )}
           </div>
           {/* Navigation buttons */}
           <div className="flex justify-between">

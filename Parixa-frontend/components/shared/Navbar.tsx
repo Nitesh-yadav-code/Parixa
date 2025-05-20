@@ -3,6 +3,13 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -66,7 +73,7 @@ export default function Navbar() {
               ))}
             </div>
             <div className="flex items-center space-x-4">
-              <Link href="/login" className="text-sm font-medium text-gray-700 hover:text-purple-600 transition-colors">
+              {/* <Link href="/login" className="text-sm font-medium text-gray-700 hover:text-purple-600 transition-colors">
                 Log in
               </Link>
               <Link
@@ -74,7 +81,14 @@ export default function Navbar() {
                 className="text-sm font-medium bg-gradient-to-r from-purple-600 to-blue-500 text-white px-4 py-2 rounded-md hover:opacity-90 transition-opacity"
               >
                 Sign up
-              </Link>
+              </Link> */}
+              <SignedOut>
+              <SignInButton />
+              <SignUpButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
             </div>
           </div>
 

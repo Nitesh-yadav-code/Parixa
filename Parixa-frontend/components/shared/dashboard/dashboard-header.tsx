@@ -3,6 +3,13 @@
 import Link from "next/link"
 import { useState } from "react"
 import { Bell, ChevronDown, Menu, Search, User } from "lucide-react"
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs'
 
 export function DashboardHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -72,13 +79,16 @@ export function DashboardHeader() {
             </button>
 
             <div className="hidden md:flex items-center">
-              <button className="flex items-center text-sm font-medium text-gray-700 hover:text-purple-600 transition-colors duration-200">
+              {/* <button className="flex items-center text-sm font-medium text-gray-700 hover:text-purple-600 transition-colors duration-200">
                 <div className="h-8 w-8 rounded-full bg-gradient-to-r from-purple-100 to-blue-100 flex items-center justify-center text-purple-700 mr-2 border border-purple-200">
                   <User className="h-4 w-4" />
                 </div>
                 <span>John Doe</span>
                 <ChevronDown className="ml-1 h-4 w-4" />
-              </button>
+              </button> */}
+              <SignedIn>
+              <UserButton />
+            </SignedIn>
             </div>
 
             <button
@@ -117,10 +127,13 @@ export function DashboardHeader() {
                 Results
               </Link>
               <div className="border-t border-gray-100 my-2"></div>
-              <button className="flex items-center text-gray-500 hover:bg-gray-50 px-3 py-2 rounded-md">
+              {/* <button className="flex items-center text-gray-500 hover:bg-gray-50 px-3 py-2 rounded-md">
                 <User className="h-4 w-4 mr-2" />
                 <span>Profile</span>
-              </button>
+              </button> */}
+              <SignedIn>
+                            <UserButton />
+                          </SignedIn>
             </nav>
           </div>
         )}
